@@ -20,9 +20,8 @@ from argopy.errors import (
     CacheFileNotFound,
 )
 from argopy.utils.checkers import is_list_of_strings, check_gdac_path
-from utils import requires_gdac, create_temp_folder, patch_ftp, has_s3
-from mocked_http import mocked_httpserver
-from mocked_http import mocked_server_address as MOCKHTTP
+from argopy.tests.helpers.utils import requires_gdac, create_temp_folder, patch_ftp, has_s3
+from argopy.tests.helpers.mocked_http import mocked_httpserver
 
 
 log = logging.getLogger("argopy.tests.data.gdac")
@@ -36,12 +35,12 @@ Since the fetcher is compatible with host from local, http or ftp protocols, we 
 """
 HOSTS = [
     argopy.tutorial.open_dataset("gdac")[0],
-    MOCKHTTP,
     "MOCKFTP",
+    "MOCKHTTP",
 ]
 
 if has_s3:
-    # todo Create a mocked server for s3 tests
+   #todo Create a mocked server for s3 tests
     HOSTS.append("s3://argo-gdac-sandbox/pub")  # todo: How do we mock a s3 server ?
 
 """
@@ -54,11 +53,11 @@ ACCESS_POINTS = [
     {"region": [-20, -16.0, 0, 1, 0, 100.0]},
     {"region": [-20, -16.0, 0, 1, 0, 100.0, "1997-07-01", "1997-09-01"]},
 ]
-# PARALLEL_ACCESS_POINTS = [
-#     {"float": [1900468, 1900117, 1900386]},
-#     {"region": [-60, -55, 40.0, 45.0, 0.0, 20.0]},
-#     {"region": [-60, -55, 40.0, 45.0, 0.0, 20.0, "2007-08-01", "2007-09-01"]},
-# ]
+PARALLEL_ACCESS_POINTS = [
+    {"float": [1900468, 1900117, 1900386]},
+    {"region": [-60, -55, 40.0, 45.0, 0.0, 20.0]},
+    {"region": [-60, -55, 40.0, 45.0, 0.0, 20.0, "2007-08-01", "2007-09-01"]},
+]
 
 # """
 # List parallel methods to be tested.
@@ -78,6 +77,7 @@ ACCESS_POINTS = [
 List user modes to be tested
 """
 USER_MODES = ["standard", "expert", "research"]
+USER_MODES = ["standard"]
 
 
 @requires_gdac
@@ -128,8 +128,10 @@ def gdac_shortname(gdac):
     """Get a short name for scenarios IDs, given a FTP host"""
     if gdac == "MOCKFTP":
         return "ftp_mocked"
-    elif "localhost" in gdac or "127.0.0.1" in gdac:
+    elif gdac == "MOCKHTTP":
         return "http_mocked"
+    # elif "localhost" in gdac or "127.0.0.1" in gdac:
+    #     return "http_mocked"
     else:
         return (lambda x: "file" if x == "" else x)(urlparse(gdac).scheme)
 
@@ -177,6 +179,9 @@ class TestBackend:
     #############
     # UTILITIES #
     #############
+    @pytest.fixture(autouse=True)
+    def _setup(self, mocked_httpserver):
+        self.mocked_server_address = mocked_httpserver
 
     def setup_class(self):
         """setup any state specific to the execution of the given class"""
@@ -184,14 +189,19 @@ class TestBackend:
         self.cachedir = create_temp_folder().folder
 
     def _patch_gdac(self, gdac):
-        return patch_ftp(gdac)
+        if gdac == 'MOCKFTP':
+            return patch_ftp(gdac)
+        elif gdac == 'MOCKHTTP':
+            return self.mocked_server_address
+        return gdac
+
 
     def _setup_fetcher(self, this_request, cached=False, parallel=False):
         """Helper method to set up options for a fetcher creation"""
         gdac = this_request.param["host"]
         access_point = this_request.param["access_point"]
         N_RECORDS = (
-            None if "tutorial" in gdac or "MOCK" in gdac else 100
+            None if "tutorial" in gdac or "MOCKFTP" in gdac else 100
         )  # Make sure we're not going to load the full index
 
         fetcher_args = {
@@ -202,7 +212,9 @@ class TestBackend:
             "cache": cached,
             "cachedir": self.cachedir,
             "parallel": False,
-            "N_RECORDS": N_RECORDS,
+            # "progress": True,
+            "N_RECORDS": N_RECORDS, # In the loaded index
+            # "MAX_FILES": N_RECORDS, # In the search result
         }
 
         if not cached:

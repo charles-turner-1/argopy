@@ -4,11 +4,15 @@ Impact of Argopy
 Papers & proceedings citing Argopy
 ----------------------------------
 
+#. Adam, R. N., & Vergos, G. S. (2026). "A Cross-Calibrated Multi-Mission Assessment of Mediterranean Sea-Level Budget Closure (2005–2025)". Geomatics, 6(5), 110. https://doi.org/10.3390/geomatics6050110
+
 #. Bartlett, Jenna  (2022). "An investigation of geostationary satellite imagery to compare developing and non-developing African easterly waves", Thesis and Dissertations. 5600. https://scholarsjunction.msstate.edu/td/5600
 
 #. Broullón, E., Williams, R. G., Naveira Garabato, A. C., Clément, L., & Fernández Castro, B. (2026). "The lifecycle of tracer variance in the North Atlantic". Geophysical Research Letters, 53, e2026GL122823. https://doi.org/10.1029/2026GL122823
 
 #. Chafik, et.al (2023). "The Faroe-Shetland Channel Jet: Structure, Variability, and Driving Mechanisms", Journal of Geophysical Research: Oceans. https://doi.org/10.1029/2022JC019083
+
+#. Y. -S. Chang, Y. -J. Liao, B. Haobijam and T. H. Singh, "A Depth-Aware Ensemble Deep Learning Framework with Layer-wise Recursive Prediction for Multi-Source Subsurface Ocean Temperature and Salinity Forecasting", IEEE Transactions on Geoscience and Remote Sensing. doi: https://10.1109/TGRS.2026.3736768
 
 #. Chevillard C, Juza M, Dıaz-Barroso L, Reyes E, Escudier R and Tintore J (2024). "Capability of the Mediterranean Argo network to monitor sub-regional climate change indicators", Front. Mar. Sci. 11:1416486. https://doi.org/10.3389/fmars.2024.1416486
 
@@ -43,6 +47,8 @@ Papers & proceedings citing Argopy
 #. Singh, Shikha and Sapkal, Mayur (2025). "A machine learning approach to identify upper ocean water masses in the Indian Ocean", CSI Transactions on ICT. https://doi.org/10.1007/s40012-025-00417-9.
 
 #. Steinberg, J. M., Piecuch, C. G., Hamlington, B. D., Thompson, P. R., & Coats, S. (2024). "Influence of deep-ocean warming on coastal sea-level decadal trends in the Gulf of Mexico", Journal of Geophysical Research: Oceans, 129, e2023JC019681. https://doi.org/10.1029/2023JC019681
+
+#. Terzić, E., & Vilibić, I. (2026). "Observational evidence for accelerated warming and salinification propagating into the deep Mediterranean", Geophysical Research Letters, 53, e2026GL124518. https://doi.org/10.1029/2026GL124518
 
 #. Yao, L., Taylor, J.R. (2026). "Global climatology of submesoscale restratification using machine learning". Sci Rep (2026). https://doi.org/10.1038/s41598-026-41929-x
 
